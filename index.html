@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pavement Temperature Predictor</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-image: url('pexels-pixabay-163848.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 50px auto;
+        }
+        .logo {
+            width: 150px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin: 15px 0;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        .button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .button:hover {
+            background-color: darkblue;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="1234-removebg-preview.png" alt="Logo" class="logo">
+        <h1>Pavement Temperature Predictor</h1>
+        <div class="input-group">
+            <label for="thickness">Enter Thickness of Asphalt Layer (mm):</label>
+            <input type="number" id="thickness" oninput="updatePrecedingHours()">
+            <p class="note">(* Total thickness of bituminous layer including wearing & binder course)</p>
+        </div>
+        <div class="input-group">
+            <label for="preceding-hours">No. of Required Preceding Hours:</label>
+            <input type="text" id="preceding-hours" readonly>
+            <p class="note">* for calculation of requisite Average Air Temperature</p>
+        </div>
+        <div id="temperature-entries">
+            <p class="note">(Enter Hourly Average Air Temperature (in ℃)):</p>
+        </div>
+        <div class="input-group">
+            <label for="time">Enter Time (HH:MM):</label>
+            <input type="text" id="time">
+            <p class="note">* Time of the day at which pavement temperature needs to be predicted in 24 hours format</p>
+        </div>
+        <button class="button" onclick="calculate()">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calc_d_low(t) {
+            return 0.0578 * t + 34.35;
+        }
+
+        function calc_d_upp(t) {
+            return -0.0029 * (t ** 2) + 1.21 * t - 43.79;
+        }
+
+        function calc_prhrs(t) {
+            return 0.436 * (t ** 0.61);
+        }
+
+        function calc_avg_at(at, prhrs) {
+            return at.reduce((a, b) => a + b, 0) / prhrs;
+        }
+
+        function calculate_time(T) {
+            return 2 * Math.PI * Math.sin((T - 11) / 16);
+        }
+
+        function predict_pavement_temperature(avg_at, t1, D) {
+            const temperature = 6.281 + 0.029 * (avg_at ** 2) + 0.14 * t1 + 0.15 * Math.log(D);
+            return temperature.toFixed(2);
+        }
+
+        function updatePrecedingHours() {
+            const t = parseInt(document.getElementById('thickness').value);
+            if (!isNaN(t)) {
+                const d_low = calc_d_low(t);
+                const d_upp = calc_d_upp(t);
+                const D = (d_low + d_upp) / 2;
+                const prhrs = Math.ceil(calc_prhrs(t));
+                document.getElementById('preceding-hours').value = prhrs;
+                generateTemperatureEntries(prhrs);
+            } else {
+                document.getElementById('preceding-hours').value = '';
+                document.getElementById('temperature-entries').innerHTML = '';
+            }
+        }
+
+        function generateTemperatureEntries(prhrs) {
+            const container = document.getElementById('temperature-entries');
+            container.innerHTML = '';
+            for (let i = 0; i < prhrs; i++) {
+                const div = document.createElement('div');
+                div.className = 'input-group';
+                div.innerHTML = `
+                    <label for="hour-${i + 1}">Hour ${i + 1} Temp (℃):</label>
+                    <input type="number" id="hour-${i + 1}">
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        function calculate() {
+            try {
+                const t = parseInt(document.getElementById('thickness').value);
+                const d_low = calc_d_low(t);
+                const d_upp = calc_d_upp(t);
+                const D = (d_low + d_upp) / 2;
+                const prhrs = Math.ceil(calc_prhrs(t));
+
+                const at = [];
+                for (let i = 0; i < prhrs; i++) {
+                    const temp = parseFloat(document.getElementById(`hour-${i + 1}`).value);
+                    if (!isNaN(temp)) {
+                        at.push(temp);
+                    }
+                }
+                const avg_at = calc_avg_at(at, prhrs);
+
+                const time_input = document.getElementById('time').value.split(':');
+                const a0 = parseInt(time_input[0]);
+                const a1 = parseInt(time_input[1]) / 60;
+                const T = a0 + a1;
+                const t1 = calculate_time(T);
+
+                const predicted_temperature = predict_pavement_temperature(avg_at, t1, D);
+
+                document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temperature} ℃`;
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+    </script>
+</body>
+</html>
