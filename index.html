@@ -64,6 +64,22 @@
             font-size: 1.5em; /* Increased font size */
             color: #fff;
         }
+        .hourly-temperature {
+            font-size: 12px; /* Reduce font size */
+            width: 50px; /* Adjust width */
+            height: 20px; /* Adjust height */
+            padding: 5px; /* Adjust padding */
+        }
+        .label {
+            display: inline-block;
+            width: 100px; /* Adjust width as needed */
+            text-align: right; /* Align text to the right */
+            margin-right: 10px; /* Space between label and text box */
+        }
+        .text-box {
+            display: inline-block;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -122,60 +138,23 @@
         function updatePrecedingHours() {
             const t = parseInt(document.getElementById('thickness').value);
             if (!isNaN(t)) {
-                const d_low = calc_d_low(t);
-                const d_upp = calc_d_upp(t);
-                const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(t));
-                document.getElementById('preceding-hours').value = prhrs;
-                generateTemperatureEntries(prhrs);
-            } else {
-                document.getElementById('preceding-hours').value = '';
-                document.getElementById('temperature-entries').innerHTML = '';
-            }
-        }
-
-        function generateTemperatureEntries(prhrs) {
-            const container = document.getElementById('temperature-entries');
-            container.innerHTML = '';
-            for (let i = 0; i < prhrs; i++) {
-                const div = document.createElement('div');
-                div.className = 'input-group';
-                div.innerHTML = `
-                    <input type="number" id="hour-${i + 1}" style="width: 50%; font-size: 0.8em;">
-                    <label for="hour-${i + 1}">Hour ${i + 1} Temp (℃):</label>
-                `;
-                container.appendChild(div);
+                const prhrs = calc_prhrs(t);
+                document.getElementById('preceding-hours').value = prhrs.toFixed(2);
             }
         }
 
         function calculate() {
-            try {
-                const t = parseInt(document.getElementById('thickness').value);
-                const d_low = calc_d_low(t);
-                const d_upp = calc_d_upp(t);
-                const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(t));
+            const thickness = parseInt(document.getElementById('thickness').value);
+            const time = parseFloat(document.getElementById('time').value);
+            const temperatures = Array.from(document.querySelectorAll('.hourly-temperature')).map(input => parseFloat(input.value));
+            const prhrs = parseFloat(document.getElementById('preceding-hours').value);
 
-                const at = [];
-                for (let i = 0; i < prhrs; i++) {
-                    const temp = parseFloat(document.getElementById(`hour-${i + 1}`).value);
-                    if (!isNaN(temp)) {
-                        at.push(temp);
-                    }
-                }
-                const avg_at = calc_avg_at(at, prhrs);
-
-                const time_input = document.getElementById('time').value.split(':');
-                const a0 = parseInt(time_input[0]);
-                const a1 = parseInt(time_input[1]) / 60;
-                const T = a0 + a1;
-                const t1 = calculate_time(T);
-
-                const predicted_temperature = predict_pavement_temperature(avg_at, t1, D);
-
-                document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temperature} ℃`;
-            } catch (e) {
-                alert('Error: ' + e.message);
+            if (!isNaN(thickness) && !isNaN(time) && temperatures.every(temp => !isNaN(temp)) && !isNaN(prhrs)) {
+                const avg_at = calc_avg_at(temperatures, prhrs);
+                const predicted_temp = predict_pavement_temperature(avg_at, time, thickness);
+                document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temp}°C`;
+            } else {
+                document.getElementById('result').innerText = 'Please enter valid inputs.';
             }
         }
     </script>
