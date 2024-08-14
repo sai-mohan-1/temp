@@ -80,6 +80,13 @@
             display: inline-block;
             vertical-align: middle;
         }
+        .time-input {
+            width: 30px; /* Width for time input boxes */
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -101,8 +108,10 @@
         </div>
         <div id="temperature-entries"></div>
         <div class="input-group">
-            <label for="time">Enter Time (HH:MM):</label>
-            <input type="text" id="time">
+            <label for="time-hours">Enter Time (HH:MM):</label>
+            <input type="number" id="time-hours" class="time-input" min="0" max="23">
+            <span>:</span>
+            <input type="number" id="time-minutes" class="time-input" min="0" max="59">
             <p class="note">* Time of the day at which pavement temperature needs to be predicted in 24 hours format</p>
         </div>
         <button class="button" onclick="calculate()">Calculate</button>
@@ -181,10 +190,9 @@
                 }
                 const avg_at = calc_avg_at(at, prhrs);
 
-                const time_input = document.getElementById('time').value.split(':');
-                const a0 = parseInt(time_input[0]);
-                const a1 = parseInt(time_input[1]) / 60;
-                const T = a0 + a1;
+                const hours = parseInt(document.getElementById('time-hours').value);
+                const minutes = parseInt(document.getElementById('time-minutes').value) / 60;
+                const T = hours + minutes;
                 const t1 = calculate_time(T);
 
                 const predicted_temperature = predict_pavement_temperature(avg_at, t1, D);
