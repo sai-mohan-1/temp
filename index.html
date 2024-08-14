@@ -59,7 +59,7 @@
         }
         .result {
             margin-top: 20px;
-            font-size: 1.2em;
+            font-size: 1.5em; /* Increased font size */
             color: #fff;
         }
     </style>
@@ -70,8 +70,8 @@
         <h1>Pavement Temperature Predictor</h1>
         <div class="input-group">
             <label for="thickness">Enter Thickness of Asphalt Layer (mm):</label>
-            <input type="number" id="thickness" oninput="updatePrecedingHours()">
             <p class="note">* Total thickness of bituminous layer including wearing & binder course</p>
+            <input type="number" id="thickness" oninput="updatePrecedingHours()">
         </div>
         <div class="input-group">
             <label for="preceding-hours">No. of Required Preceding Hours:</label>
