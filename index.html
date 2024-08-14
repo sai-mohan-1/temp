@@ -16,11 +16,12 @@
             padding: 0;
         }
         .container {
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            max-width: 800px;
+            max-width: 600px;
             margin: 50px auto;
+            font-size: 1.5em; /* Increase font size */
         }
         .logo {
             width: 150px;
@@ -34,17 +35,18 @@
             justify-content: space-between;
         }
         .input-group label {
-            font-size: 1.1em; /* Increased font size */
+            font-size: 1.5em; /* Increased font size */
             margin-left: 10px;
         }
         .input-group input {
-            width: 30%; /* Decreased width */
+            width: 40%; /* Decreased width */
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 1.5em; /* Increased font size */
         }
         .note {
-            font-size: 0.8em;
+            font-size: 1.2em; /* Increased font size */
             color: #ccc;
             text-align: left; /* Align note to the left */
             margin-left: 10px; /* Ensure it starts from the extreme left */
@@ -56,20 +58,20 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.5em; /* Increased font size */
         }
         .button:hover {
             background-color: darkblue;
         }
         .result {
             margin-top: 20px;
-            font-size: 1.5em; /* Increased font size */
+            font-size: 1.8em; /* Increased font size */
             color: #fff;
         }
         .hourly-temperature {
-            font-size: 10px; /* Further reduce font size */
+            font-size: 1.2em; /* Increased font size */
             width: 50px; /* Increase width */
-            height: 15px; /* Further adjust height */
+            height: 30px; /* Adjust height */
             padding: 3px; /* Further adjust padding */
         }
         .label {
@@ -77,6 +79,7 @@
             width: 100px; /* Adjust width as needed */
             text-align: right; /* Align text to the right */
             margin-right: 10px; /* Space between label and text box */
+            font-size: 1.5em; /* Increased font size */
         }
         .text-box {
             display: inline-block;
@@ -89,6 +92,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             text-align: center;
+            font-size: 1.5em; /* Increased font size */
             -moz-appearance: textfield; /* Remove spin buttons in Firefox */
         }
         .time-input::-webkit-outer-spin-button,
@@ -120,10 +124,10 @@
         </div>
         <p class="note">* Total thickness of bituminous layer including wearing & binder course</p>
         <div class="input-group">
-            <label for="preceding-hours">No. of Preceding Hours:</label>
+            <label for="preceding-hours">No. of Required Preceding Hours:</label>
             <input type="text" id="preceding-hours" readonly>
         </div>
-        <p class="note">* For calculation of requisite Average Air Temperature</p>
+        <p class="note">* for calculation of requisite Average Air Temperature</p>
         <div class="input-group">
             <label>Enter Hourly Average Air Temperature (in ℃):</label>
         </div>
@@ -150,8 +154,8 @@
             return -0.0029 * (t ** 2) + 1.21 * t - 43.79;
         }
 
-        function calc_prhrs(t) {
-            return 0.436 * (t ** 0.61);
+        function calc_prhrs(D) {
+            return 0.436 * (D ** 0.61);
         }
 
         function calc_avg_at(at, prhrs) {
@@ -173,7 +177,7 @@
                 const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(t));
+                const prhrs = Math.ceil(calc_prhrs(D));
                 document.getElementById('preceding-hours').value = prhrs;
                 generateTemperatureEntries(prhrs);
             } else {
@@ -203,7 +207,7 @@
                 const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(t));
+                const prhrs = Math.ceil(calc_prhrs(D));
 
                 const at = [];
                 for (let i = 0; i < prhrs; i++) {
