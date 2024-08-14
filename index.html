@@ -19,7 +19,7 @@
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            max-width: 600px;
+            max-width: 800px;
             margin: 50px auto;
         }
         .logo {
@@ -68,7 +68,7 @@
         }
         .hourly-temperature {
             font-size: 10px; /* Further reduce font size */
-            width: 30px; /* Further reduce width */
+            width: 50px; /* Increase width */
             height: 15px; /* Further adjust height */
             padding: 3px; /* Further adjust padding */
         }
@@ -141,8 +141,8 @@
             return -0.0029 * (t ** 2) + 1.21 * t - 43.79;
         }
 
-        function calc_prhrs(D) {
-            return 0.436 * (D ** 0.61);
+        function calc_prhrs(t) {
+            return 0.436 * (t ** 0.61);
         }
 
         function calc_avg_at(at, prhrs) {
@@ -164,7 +164,7 @@
                 const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(D));
+                const prhrs = Math.ceil(calc_prhrs(t));
                 document.getElementById('preceding-hours').value = prhrs;
                 generateTemperatureEntries(prhrs);
             } else {
@@ -182,6 +182,8 @@
                 input.id = `hour-${i + 1}`;
                 input.className = 'hourly-temperature text-box';
                 input.placeholder = `H${i + 1}`;
+                input.style.width = '50px'; /* Increase width */
+                input.style.height = '30px'; /* Adjust height */
                 container.appendChild(input);
             }
         }
@@ -192,7 +194,7 @@
                 const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(D));
+                const prhrs = Math.ceil(calc_prhrs(t));
 
                 const at = [];
                 for (let i = 0; i < prhrs; i++) {
