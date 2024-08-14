@@ -16,10 +16,10 @@
             padding: 0;
         }
         .container {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            max-width: 800px;
+            max-width: 600px;
             margin: 50px auto;
         }
         .logo {
@@ -38,7 +38,7 @@
             margin-left: 10px;
         }
         .input-group input {
-            width: 25px;
+            width: 60%;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -68,13 +68,13 @@
         }
         .hourly-temperature {
             font-size: 10px; /* Further reduce font size */
-            width: 25px; /* Further reduce width */
+            width: 30px; /* Further reduce width */
             height: 15px; /* Further adjust height */
             padding: 3px; /* Further adjust padding */
         }
         .label {
             display: inline-block;
-            width: 25px; /* Adjust width as needed */
+            width: 100px; /* Adjust width as needed */
             text-align: right; /* Align text to the right */
             margin-right: 10px; /* Space between label and text box */
         }
@@ -83,12 +83,17 @@
             vertical-align: middle;
         }
         .time-input {
-            width: 25px; /* Width for time input boxes */
-            height: 255px; /* Make the boxes square */
+            width: 30px; /* Width for time input boxes */
+            height: 30px; /* Make the boxes square */
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
             text-align: center;
+        }
+        .temperature-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
     </style>
 </head>
@@ -100,16 +105,16 @@
             <label for="thickness">Enter Thickness of Asphalt Layer (mm):</label>
             <input type="number" id="thickness" oninput="updatePrecedingHours()">
         </div>
-        <p class="note">* Total thickness of bituminous layers including wearing & binder course</p>
+        <p class="note">* Total thickness of bituminous layer including wearing & binder course</p>
         <div class="input-group">
-            <label for="preceding-hours">No. of Preceding Hours:</label>
+            <label for="preceding-hours">No. of Required Preceding Hours:</label>
             <input type="text" id="preceding-hours" readonly>
         </div>
-        <p class="note">* For calculation of requisite Average Air Temperature</p>
+        <p class="note">* for calculation of requisite Average Air Temperature</p>
         <div class="input-group">
             <label>Enter Hourly Average Air Temperature (in ℃):</label>
         </div>
-        <div id="temperature-entries"></div>
+        <div id="temperature-entries" class="temperature-row"></div>
         <div class="input-group">
             <label for="time-hours">Enter Time (HH:MM):</label>
             <input type="number" id="time-hours" class="time-input" min="0" max="23">
@@ -166,13 +171,12 @@
             const container = document.getElementById('temperature-entries');
             container.innerHTML = '';
             for (let i = 0; i < prhrs; i++) {
-                const div = document.createElement('div');
-                div.className = 'input-group';
-                div.innerHTML = `
-                    <label for="hour-${i + 1}" class="label">Hour ${i + 1} Temp :</label>
-                    <input type="number" id="hour-${i + 1}" class="hourly-temperature text-box">
-                `;
-                container.appendChild(div);
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.id = `hour-${i + 1}`;
+                input.className = 'hourly-temperature text-box';
+                input.placeholder = `H${i + 1}`;
+                container.appendChild(input);
             }
         }
 
@@ -182,7 +186,7 @@
                 const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(D));
+                const prhrs = Math.ceil(calc_prhrs(t));
 
                 const at = [];
                 for (let i = 0; i < prhrs; i++) {
