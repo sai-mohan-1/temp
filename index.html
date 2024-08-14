@@ -82,6 +82,7 @@
         }
         .time-input {
             width: 30px; /* Width for time input boxes */
+            height: 30px; /* Make the boxes square */
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -95,9 +96,9 @@
         <h1>Pavement Temperature Predictor</h1>
         <div class="input-group">
             <label for="thickness">Enter Thickness of Asphalt Layer (mm):</label>
-            <p class="note">* Total thickness of bituminous layer including wearing & binder course</p>
             <input type="number" id="thickness" oninput="updatePrecedingHours()">
         </div>
+        <p class="note">* Total thickness of bituminous layer including wearing & binder course</p>
         <div class="input-group">
             <label for="preceding-hours">No. of Required Preceding Hours:</label>
             <p class="note">* for calculation of requisite Average Air Temperature</p>
