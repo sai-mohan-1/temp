@@ -33,6 +33,7 @@
         .input-group label {
             display: block;
             margin-bottom: 5px;
+            font-size: 0.9em;
         }
         .input-group input {
             width: 100%;
@@ -41,7 +42,7 @@
             border-radius: 5px;
         }
         .note {
-            font-size: 0.9em;
+            font-size: 0.8em;
             color: #ccc;
         }
         .button {
@@ -78,12 +79,12 @@
             <p class="note">* for calculation of requisite Average Air Temperature</p>
         </div>
         <div id="temperature-entries">
-            <p class="note">(Enter Hourly Average Air Temperature (in ℃)):</p>
+            <p class="note">Enter Hourly Average Air Temperature (in ℃):</p>
         </div>
         <div class="input-group">
             <label for="time">Enter Time (HH:MM):</label>
             <input type="text" id="time">
-            <p class="note">(* Time of the day at which pavement temperature needs to be predicted in 24 hours format)</p>
+            <p class="note">* Time of the day at which pavement temperature needs to be predicted in 24 hours format</p>
         </div>
         <button class="button" onclick="calculate()">Calculate</button>
         <div class="result" id="result"></div>
@@ -98,8 +99,8 @@
             return -0.0029 * (t ** 2) + 1.21 * t - 43.79;
         }
 
-        function calc_prhrs(t) {
-            return 0.436 * (t ** 0.61);
+        function calc_prhrs(D) {
+            return 0.436 * (D ** 0.61);
         }
 
         function calc_avg_at(at, prhrs) {
@@ -121,7 +122,7 @@
                 const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(t));
+                const prhrs = Math.ceil(calc_prhrs(D));
                 document.getElementById('preceding-hours').value = prhrs;
                 generateTemperatureEntries(prhrs);
             } else {
