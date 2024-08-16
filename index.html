@@ -21,7 +21,7 @@
             border-radius: 10px;
             max-width: 600px;
             margin: 50px auto;
-            font-size: 1.5em; /* Increase font size */
+            font-size: 1.3em; /* Slightly increase font size */
         }
         .logo {
             width: 150px;
@@ -35,7 +35,7 @@
             justify-content: space-between;
         }
         .input-group label {
-            font-size: 1.5em; /* Increased font size */
+            font-size: 1.3em; /* Slightly increased font size */
             margin-left: 10px;
         }
         .input-group input {
@@ -43,10 +43,10 @@
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 1.5em; /* Increased font size */
+            font-size: 1.3em; /* Slightly increased font size */
         }
         .note {
-            font-size: 1.2em; /* Increased font size */
+            font-size: 1.1em; /* Slightly increased font size */
             color: #ccc;
             text-align: left; /* Align note to the left */
             margin-left: 10px; /* Ensure it starts from the extreme left */
@@ -58,18 +58,18 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1.5em; /* Increased font size */
+            font-size: 1.3em; /* Slightly increased font size */
         }
         .button:hover {
             background-color: darkblue;
         }
         .result {
             margin-top: 20px;
-            font-size: 1.8em; /* Increased font size */
+            font-size: 1.6em; /* Slightly increased font size */
             color: #fff;
         }
         .hourly-temperature {
-            font-size: 1.2em; /* Increased font size */
+            font-size: 1.1em; /* Slightly increased font size */
             width: 50px; /* Increase width */
             height: 30px; /* Adjust height */
             padding: 3px; /* Further adjust padding */
@@ -79,7 +79,7 @@
             width: 100px; /* Adjust width as needed */
             text-align: right; /* Align text to the right */
             margin-right: 10px; /* Space between label and text box */
-            font-size: 1.5em; /* Increased font size */
+            font-size: 1.3em; /* Slightly increased font size */
         }
         .text-box {
             display: inline-block;
@@ -92,7 +92,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             text-align: center;
-            font-size: 1.5em; /* Increased font size */
+            font-size: 1.3em; /* Slightly increased font size */
             -moz-appearance: textfield; /* Remove spin buttons in Firefox */
         }
         .time-input::-webkit-outer-spin-button,
@@ -154,8 +154,8 @@
             return -0.0029 * (t ** 2) + 1.21 * t - 43.79;
         }
 
-        function calc_prhrs(D) {
-            return 0.436 * (D ** 0.61);
+        function calc_prhrs(t) {
+            return 0.436 * (t ** 0.61);
         }
 
         function calc_avg_at(at, prhrs) {
@@ -177,7 +177,7 @@
                 const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(D));
+                const prhrs = Math.ceil(calc_prhrs(t));
                 document.getElementById('preceding-hours').value = prhrs;
                 generateTemperatureEntries(prhrs);
             } else {
@@ -207,7 +207,7 @@
                 const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(D));
+                const prhrs = Math.ceil(calc_prhrs(t));
 
                 const at = [];
                 for (let i = 0; i < prhrs; i++) {
