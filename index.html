@@ -133,16 +133,8 @@
         </div>
         <div id="temperature-entries" class="temperature-row"></div>
         <div class="input-group">
-            <label for="time-hours">Enter Time (HH:MM):</label>
-            <div class="time-group">
-                <select id="time-hours" class="time-input">
-                    ${Array.from({ length: 24 }, (_, i) => `<option value="${i}">${i}</option>`).join('')}
-                </select>
-                <span>:</span>
-                <select id="time-minutes" class="time-input">
-                    ${Array.from({ length: 60 }, (_, i) => `<option value="${i}">${i}</option>`).join('')}
-                </select>
-            </div>
+            <label for="time">Enter Time (HH:MM):</label>
+            <input type="time" id="time" class="time-input" min="00:00" max="23:59">
         </div>
         <p class="note">* Time of the day at which pavement temperature needs to be predicted (in 24-hours format)</p>
         <button class="button" onclick="calculate()">Calculate</button>
@@ -222,8 +214,9 @@
                 }
                 const avg_at = calc_avg_at(at, prhrs);
 
-                const hours = parseInt(document.getElementById('time-hours').value);
-                const minutes = parseInt(document.getElementById('time-minutes').value) / 60;
+                const time = document.getElementById('time').value.split(':');
+                const hours = parseInt(time[0]);
+                const minutes = parseInt(time[1]) / 60;
                 const T = hours + minutes;
                 const t1 = calculate_time(T);
 
@@ -237,3 +230,6 @@
     </script>
 </body>
 </html>
+
+
+                
