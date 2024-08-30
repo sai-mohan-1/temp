@@ -16,7 +16,7 @@
             padding: 0;
         }
         .container {
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0);
             padding: 20px;
             border-radius: 10px;
             max-width: 900px;
@@ -47,7 +47,7 @@
         }
         .note {
             font-size: 1.1em; /* Slightly increased font size */
-            color: #000000;
+            color: White;
             text-align: left; /* Align note to the left */
             margin-left: 10px; /* Ensure it starts from the extreme left */
         }
@@ -119,11 +119,6 @@
         <img src="1234-removebg-preview.png" alt="Logo" class="logo">
         <h1>Pavement Temperature Predictor</h1>
         <div class="input-group">
-            <label for="location">Enter Location:</label>
-            <input type="text" id="location">
-            <button class="button" onclick="fetchWeatherData()">Fetch Weather Data</button>
-        </div>
-        <div class="input-group">
             <label for="thickness">Enter Thickness of Asphalt Layer (mm):</label>
             <input type="number" id="thickness" oninput="updatePrecedingHours()">
         </div>
@@ -151,22 +146,6 @@
     </div>
 
     <script>
-        const apiKey = 'YOUR_API_KEY'; // Replace with your Weatherstack API key
-
-        function fetchWeatherData() {
-            const location = document.getElementById('location').value;
-            fetch(`http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`)
-                .then(response => response.json())
-                .then(data => {
-                    const temperatures = data.current.temperature;
-                    const prhrs = parseInt(document.getElementById('preceding-hours').value);
-                    for (let i = 0; i < prhrs; i++) {
-                        document.getElementById(`hour-${i + 1}`).value = temperatures;
-                    }
-                })
-                .catch(error => console.error('Error fetching weather data:', error));
-        }
-
         function calc_d_low(t) {
             return 0.0578 * t + 34.35;
         }
@@ -211,7 +190,7 @@
             const container = document.getElementById('temperature-entries');
             container.innerHTML = '';
             for (let i = 0; i < prhrs; i++) {
-                                const input = document.createElement('input');
+                const input = document.createElement('input');
                 input.type = 'number';
                 input.id = `hour-${i + 1}`;
                 input.className = 'hourly-temperature text-box';
