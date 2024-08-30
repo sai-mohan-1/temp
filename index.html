@@ -38,7 +38,7 @@
             font-size: 1.3em; /* Slightly increased font size */
             margin-left: 10px;
         }
-        .input-group input {
+        .input-group input, .input-group select {
             width: 30%; /* Decreased width */
             padding: 5px;
             border: 1px solid #ccc;
@@ -135,9 +135,13 @@
         <div class="input-group">
             <label for="time-hours">Enter Time (HH:MM):</label>
             <div class="time-group">
-                <input type="number" id="time-hours" class="time-input" min="0" max="23">
+                <select id="time-hours" class="time-input">
+                    ${Array.from({ length: 24 }, (_, i) => `<option value="${i}">${i}</option>`).join('')}
+                </select>
                 <span>:</span>
-                <input type="number" id="time-minutes" class="time-input" min="0" max="59">
+                <select id="time-minutes" class="time-input">
+                    ${Array.from({ length: 60 }, (_, i) => `<option value="${i}">${i}</option>`).join('')}
+                </select>
             </div>
         </div>
         <p class="note">* Time of the day at which pavement temperature needs to be predicted (in 24-hours format)</p>
@@ -233,4 +237,3 @@
     </script>
 </body>
 </html>
-            
