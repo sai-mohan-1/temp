@@ -174,18 +174,62 @@
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
                 const prhrs = Math.ceil(calc_prhrs(t));
+                document.getElementById('preceding-hours').value = prhrs;
+                generateTemperatureEntries(prhrs);
+            } else {
+                document.getElementById('preceding-hours').value = '';
+                document.getElementById('temperature-entries').innerHTML = '';
+            }
+        }
+
+        function generateTemperatureEntries(prhrs) {
+            const container = document.getElementById('temperature-entries');
+            container.innerHTML = '';
+            for (let i = 0; i < prhrs; i++) {
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.id = `hour-${i + 1}`;
+                input.className = 'hourly-temperature text-box';
+                input.placeholder = `H${i + 1}`;
+                input.style.width = '50px'; /* Increase width */
+                input.style.height = '30px'; /* Adjust height */
+                container.appendChild(input);
+            }
+        }
+
+        function calculate() {
+            try {
+                const t = parseInt(document.getElementById('thickness').value);
+                if (isNaN(t) || t <= 0) {
+                    alert('Please enter a valid thickness.');
+                    return;
+                }
+
+                const d_low = calc_d_low(t);
+                const d_upp = calc_d_upp(t);
+                const D = (d_low + d_upp) / 2;
+                const prhrs = Math.ceil(calc_prhrs(t));
 
                 const at = [];
                 for (let i = 0; i < prhrs; i++) {
                     const temp = parseFloat(document.getElementById(`hour-${i + 1}`).value);
-                    if (!isNaN(temp)) {
-                        at.push(temp);
+                    if (isNaN(temp)) {
+                        alert('Please enter all the required hourly average air temperatures.');
+                        return;
                     }
+                    at.push(temp);
                 }
+
                 const avg_at = calc_avg_at(at, prhrs);
 
-                const time = document.getElementById('time').value.split(':');
-                const hours = parseInt(time[0]);
+                const time = document.getElementById('time').value;
+                if (!time) {
+                    alert('Please enter the time.');
+                    return;
+                }
+
+                const timeParts = time.split(':');
+                const hours = parseInt(timeParts[0]);
                                 const minutes = parseInt(timeParts[1]) / 60;
                 const T = hours + minutes;
                 const t1 = calculate_time(T);
