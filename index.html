@@ -174,36 +174,6 @@
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
                 const prhrs = Math.ceil(calc_prhrs(t));
-                document.getElementById('preceding-hours').value = prhrs;
-                generateTemperatureEntries(prhrs);
-            } else {
-                document.getElementById('preceding-hours').value = '';
-                document.getElementById('temperature-entries').innerHTML = '';
-            }
-        }
-
-        function generateTemperatureEntries(prhrs) {
-            const container = document.getElementById('temperature-entries');
-            container.innerHTML = '';
-            for (let i = 0; i < prhrs; i++) {
-                const input = document.createElement('input');
-                input.type = 'number';
-                input.id = `hour-${i + 1}`;
-                input.className = 'hourly-temperature text-box';
-                input.placeholder = `H${i + 1}`;
-                input.style.width = '50px'; /* Increase width */
-                input.style.height = '30px'; /* Adjust height */
-                container.appendChild(input);
-            }
-        }
-
-        function calculate() {
-            try {
-                const t = parseInt(document.getElementById('thickness').value);
-                const d_low = calc_d_low(t);
-                const d_upp = calc_d_upp(t);
-                const D = (d_low + d_upp) / 2;
-                const prhrs = Math.ceil(calc_prhrs(t));
 
                 const at = [];
                 for (let i = 0; i < prhrs; i++) {
@@ -216,15 +186,14 @@
 
                 const time = document.getElementById('time').value.split(':');
                 const hours = parseInt(time[0]);
-                const minutes = parseInt(time[1]) / 60;
+                                const minutes = parseInt(timeParts[1]) / 60;
                 const T = hours + minutes;
                 const t1 = calculate_time(T);
 
                 const predicted_temperature = predict_pavement_temperature(avg_at, t1, D);
 
-                // Comment out or remove the line below to prevent displaying the result
-                                // Comment out or remove the line below to prevent displaying the result
-                // document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temperature} ℃`;
+                // Display the result only if all data is provided
+                document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temperature} ℃`;
             } catch (e) {
                 alert('Error: ' + e.message);
             }
