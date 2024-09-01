@@ -222,7 +222,9 @@
 
                 const predicted_temperature = predict_pavement_temperature(avg_at, t1, D);
 
-                document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temperature} ℃`;
+                // Comment out or remove the line below to prevent displaying the result
+                                // Comment out or remove the line below to prevent displaying the result
+                // document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temperature} ℃`;
             } catch (e) {
                 alert('Error: ' + e.message);
             }
@@ -230,6 +232,3 @@
     </script>
 </body>
 </html>
-
-
-                
