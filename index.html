@@ -64,7 +64,7 @@
             background-color: darkblue;
         }
         .result {
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 1.6em; /* Slightly increased font size */
             color: #fff;
             background-color: rgba(0, 0, 0, 0.5); /* Add background color */
@@ -167,7 +167,7 @@
 
         function predict_pavement_temperature(avg_at, t1, D) {
             const temperature = 6.281 + 0.029 * (avg_at ** 2) + 0.14 * t1 + 0.15 * Math.log(D);
-            return temperature.toFixed(2);
+            return temperature.toFixed(1);
         }
 
         function updatePrecedingHours() {
@@ -191,6 +191,7 @@
             for (let i = 0; i < prhrs; i++) {
                 const input = document.createElement('input');
                 input.type = 'number';
+                input.step = '0.1'; // Allow up to one decimal place
                 input.id = `hour-${i + 1}`;
                 input.className = 'hourly-temperature text-box';
                 input.placeholder = `H${i + 1}`;
@@ -225,13 +226,13 @@
 
                 const avg_at = calc_avg_at(at, prhrs);
 
-                const time = document.getElementById('time').value;
+                                const time = document.getElementById('time').value;
                 if (!time) {
                     alert('Please enter the time.');
                     return;
                 }
 
-                                const timeParts = time.split(':');
+                const timeParts = time.split(':');
                 const hours = parseInt(timeParts[0]);
                 const minutes = parseInt(timeParts[1]) / 60;
                 const T = hours + minutes;
