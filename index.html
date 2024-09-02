@@ -71,6 +71,14 @@
             padding: 10px; /* Add padding */
             border-radius: 5px; /* Add border radius */
         }
+        .depth {
+            margin-top: 10px;
+            font-size: 1.2em; /* Decreased font size */
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5); /* Add background color */
+            padding: 10px; /* Add padding */
+            border-radius: 5px; /* Add border radius */
+        }
         .hourly-temperature {
             font-size: 0.9em; /* Decreased font size */
             width: 50px; /* Increase width */
@@ -142,6 +150,7 @@
         <p class="note">* Time of the day at which pavement temperature needs to be predicted (in 24-hours format)</p>
         <button class="button" onclick="calculate()">Calculate</button>
         <div class="result" id="result"></div>
+        <div class="depth" id="depth"></div>
     </div>
 
     <script>
@@ -215,6 +224,7 @@
                 }
 
                 const d_low = calc_d_low(t);
+                                const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
                 const prhrs = Math.ceil(calc_prhrs(t));
@@ -223,7 +233,7 @@
                 for (let i = 0; i < prhrs; i++) {
                     const temp = parseFloat(document.getElementById(`hour-${i + 1}`).value);
                     if (isNaN(temp)) {
-                                                alert('Please enter all the required hourly average air temperatures.');
+                        alert('Please enter all the required hourly average air temperatures.');
                         return;
                     }
                     at.push(temp);
@@ -246,10 +256,8 @@
                 const predicted_temperature = predict_pavement_temperature(avg_at, t1, D);
 
                 // Display the result only if all data is provided
-                document.getElementById('result').innerHTML = `
-                    Predicted Pavement Temperature: ${predicted_temperature} ℃<br>
-                    Effective Depth: ${D.toFixed(0)} mm
-                `;
+                document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temperature} ℃`;
+                document.getElementById('depth').innerText = `*The pavement temperature is predicted at an effictive depth : ${D.toFixed(0)} mm`;
             } catch (e) {
                 alert('Error: ' + e.message);
             }
