@@ -67,6 +67,9 @@
             margin-top: 20px;
             font-size: 1.6em; /* Slightly increased font size */
             color: #fff;
+            background-color: rgba(0, 0, 0, 0.5); /* Add background color */
+            padding: 10px; /* Add padding */
+            border-radius: 5px; /* Add border radius */
         }
         .hourly-temperature {
             font-size: 1.1em; /* Slightly increased font size */
@@ -119,7 +122,7 @@
         <img src="1234-removebg-preview.png" alt="Logo" class="logo">
         <h1>Pavement Temperature Predictor</h1>
         <div class="input-group">
-            <label for="thickness">Enter thickness of bituminous Layer (mm):</label>
+            <label for="thickness">Enter Thickness of Asphalt Layer (mm):</label>
             <input type="number" id="thickness" oninput="updatePrecedingHours()">
         </div>
         <p class="note">* Total thickness of bituminous layers including wearing & binder courses</p>
@@ -127,7 +130,7 @@
             <label for="preceding-hours">Number of Preceding Hours:</label>
             <input type="text" id="preceding-hours" readonly>
         </div>
-        <p class="note">* For calculation of requisite average air temperature</p>
+        <p class="note">* For calculation of requisite Average Air Temperature</p>
         <div class="input-group">
             <label>Enter Hourly Average Air Temperature (in ℃):</label>
         </div>
@@ -228,9 +231,9 @@
                     return;
                 }
 
-                const timeParts = time.split(':');
+                                const timeParts = time.split(':');
                 const hours = parseInt(timeParts[0]);
-                                const minutes = parseInt(timeParts[1]) / 60;
+                const minutes = parseInt(timeParts[1]) / 60;
                 const T = hours + minutes;
                 const t1 = calculate_time(T);
 
