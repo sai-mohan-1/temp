@@ -64,7 +64,7 @@
             background-color: darkblue;
         }
         .result {
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 1.6em; /* Slightly increased font size */
             color: #fff;
             background-color: rgba(0, 0, 0, 0.5); /* Add background color */
@@ -192,6 +192,11 @@
                 const input = document.createElement('input');
                 input.type = 'number';
                 input.step = '0.1'; // Allow up to one decimal place
+                input.oninput = function() {
+                    if (this.value.split('.').length > 1 && this.value.split('.')[1].length > 1) {
+                        this.value = parseFloat(this.value).toFixed(1);
+                    }
+                };
                 input.id = `hour-${i + 1}`;
                 input.className = 'hourly-temperature text-box';
                 input.placeholder = `H${i + 1}`;
@@ -216,7 +221,7 @@
 
                 const at = [];
                 for (let i = 0; i < prhrs; i++) {
-                    const temp = parseFloat(document.getElementById(`hour-${i + 1}`).value);
+                                        const temp = parseFloat(document.getElementById(`hour-${i + 1}`).value);
                     if (isNaN(temp)) {
                         alert('Please enter all the required hourly average air temperatures.');
                         return;
@@ -226,7 +231,7 @@
 
                 const avg_at = calc_avg_at(at, prhrs);
 
-                                const time = document.getElementById('time').value;
+                const time = document.getElementById('time').value;
                 if (!time) {
                     alert('Please enter the time.');
                     return;
