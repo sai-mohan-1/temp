@@ -138,7 +138,7 @@
             <label for="preceding-hours">Number of Preceding Hours:</label>
             <input type="text" id="preceding-hours" readonly>
         </div>
-        <p class="note">* For calculation of requisite Average Air Temperature</p>
+        <p class="note">* For calculation of requisite average air temperature</p>
         <div class="input-group">
             <label>Enter Hourly Average Air Temperature (in ℃):</label>
         </div>
@@ -224,7 +224,6 @@
                 }
 
                 const d_low = calc_d_low(t);
-                                const d_low = calc_d_low(t);
                 const d_upp = calc_d_upp(t);
                 const D = (d_low + d_upp) / 2;
                 const prhrs = Math.ceil(calc_prhrs(t));
