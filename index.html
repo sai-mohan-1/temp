@@ -35,7 +35,7 @@
             justify-content: space-between;
         }
         .input-group label {
-            font-size: 1.3em; /* Slightly increased font size */
+            font-size: 1.1em; /* Slightly increased font size */
             margin-left: 10px;
         }
         .input-group input, .input-group select {
@@ -122,7 +122,7 @@
         <img src="1234-removebg-preview.png" alt="Logo" class="logo">
         <h1>Pavement Temperature Predictor</h1>
         <div class="input-group">
-            <label for="thickness">Enter Thickness of Asphalt Layer (mm):</label>
+            <label for="thickness">Enter thickness of bituminous layer (mm):</label>
             <input type="number" id="thickness" oninput="updatePrecedingHours()">
         </div>
         <p class="note">* Total thickness of bituminous layers including wearing & binder courses</p>
@@ -130,9 +130,9 @@
             <label for="preceding-hours">Number of Preceding Hours:</label>
             <input type="text" id="preceding-hours" readonly>
         </div>
-        <p class="note">* For calculation of requisite Average Air Temperature</p>
+        <p class="note">* For calculation of requisite average air temperature</p>
         <div class="input-group">
-            <label>Enter Hourly Average Air Temperature (in ℃):</label>
+            <label>Enter hourly average air temperature (in ℃):</label>
         </div>
         <div id="temperature-entries" class="temperature-row"></div>
         <div class="input-group">
@@ -221,9 +221,9 @@
 
                 const at = [];
                 for (let i = 0; i < prhrs; i++) {
-                                        const temp = parseFloat(document.getElementById(`hour-${i + 1}`).value);
+                    const temp = parseFloat(document.getElementById(`hour-${i + 1}`).value);
                     if (isNaN(temp)) {
-                        alert('Please enter all the required hourly average air temperatures.');
+                                                alert('Please enter all the required hourly average air temperatures.');
                         return;
                     }
                     at.push(temp);
@@ -246,7 +246,10 @@
                 const predicted_temperature = predict_pavement_temperature(avg_at, t1, D);
 
                 // Display the result only if all data is provided
-                document.getElementById('result').innerText = `Predicted Pavement Temperature: ${predicted_temperature} ℃`;
+                document.getElementById('result').innerHTML = `
+                    Predicted Pavement Temperature: ${predicted_temperature} ℃<br>
+                    Effective Depth: ${D.toFixed(2)} mm
+                `;
             } catch (e) {
                 alert('Error: ' + e.message);
             }
