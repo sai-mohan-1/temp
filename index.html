@@ -167,7 +167,7 @@
 
         function predict_pavement_temperature(avg_at, t1, D) {
             const temperature = 6.281 + 0.029 * (avg_at ** 2) + 0.14 * t1 + 0.15 * Math.log(D);
-            return temperature.toFixed(2);
+            return temperature.toFixed(1);
         }
 
         function updatePrecedingHours() {
@@ -248,7 +248,7 @@
                 // Display the result only if all data is provided
                 document.getElementById('result').innerHTML = `
                     Predicted Pavement Temperature: ${predicted_temperature} ℃<br>
-                    Effective Depth: ${D} mm
+                    Effective Depth: ${D.toFixed(0)} mm
                 `;
             } catch (e) {
                 alert('Error: ' + e.message);
