@@ -10,7 +10,7 @@
             background-image: url('pexels-pixabay-163848.png');
             background-size: cover;
             background-position: center;
-            color: White;
+            color: white;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -21,7 +21,7 @@
             border-radius: 10px;
             max-width: 900px;
             margin: 50px auto;
-            font-size: 1.3em; /* Slightly increase font size */
+            font-size: 1.3em;
         }
         .logo {
             width: 200px;
@@ -33,23 +33,27 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
         }
         .input-group label {
-            font-size: 1.3em; /* Slightly increased font size */
+            font-size: 1.3em;
             margin-left: 10px;
+            flex: 1;
         }
         .input-group input, .input-group select {
-            width: 30%; /* Decreased width */
+            width: 100%;
+            max-width: 200px;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 1.3em; /* Slightly increased font size */
+            font-size: 1.3em;
+            flex: 1;
         }
         .note {
-            font-size: 1.1em; /* Slightly increased font size */
-            color: White;
-            text-align: left; /* Align note to the left */
-            margin-left: 10px; /* Ensure it starts from the extreme left */
+            font-size: 1.1em;
+            color: white;
+            text-align: left;
+            margin-left: 10px;
         }
         .button {
             background-color: blue;
@@ -58,53 +62,53 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1.3em; /* Slightly increased font size */
+            font-size: 1.3em;
         }
         .button:hover {
             background-color: darkblue;
         }
         .result {
             margin-top: 20px;
-            font-size: 1.6em; /* Slightly increased font size */
+            font-size: 1.6em;
             color: #fff;
-            background-color: rgba(0, 0, 0, 0.5); /* Add background color */
-            padding: 10px; /* Add padding */
-            border-radius: 5px; /* Add border radius */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
         }
         .depth {
             margin-top: 10px;
-            font-size: 1.0em; /* Decreased font size */
+            font-size: 1.0em;
             color: #fff;
-            background-color: rgba(0, 0, 0, 0); /* Add background color */
-            padding: 10px; /* Add padding */
-            border-radius: 5px; /* Add border radius */
+            background-color: rgba(0, 0, 0, 0);
+            padding: 10px;
+            border-radius: 5px;
         }
         .hourly-temperature {
-            font-size: 0.9em; /* Decreased font size */
-            width: 50px; /* Increase width */
-            height: 30px; /* Adjust height */
-            padding: 3px; /* Further adjust padding */
+            font-size: 0.9em;
+            width: 50px;
+            height: 30px;
+            padding: 3px;
         }
         .label {
             display: inline-block;
-            width: 100px; /* Adjust width as needed */
-            text-align: right; /* Align text to the right */
-            margin-right: 10px; /* Space between label and text box */
-            font-size: 1.3em; /* Slightly increased font size */
+            width: 100px;
+            text-align: right;
+            margin-right: 10px;
+            font-size: 1.3em;
         }
         .text-box {
             display: inline-block;
             vertical-align: middle;
         }
         .time-input {
-            width: 20px; /* Decrease width */
-            height: 30px; /* Make the boxes square */
+            width: 50px;
+            height: 30px;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
             text-align: center;
-            font-size: 1.3em; /* Slightly increased font size */
-            -moz-appearance: textfield; /* Remove spin buttons in Firefox */
+            font-size: 1.3em;
+            -moz-appearance: textfield;
         }
         .time-input::-webkit-outer-spin-button,
         .time-input::-webkit-inner-spin-button {
